@@ -64,8 +64,8 @@ the inference graph is very different from the graph used for training, this app
 would require the graph built for the training to adapt both training and inference, making it unnecessarily 
 large.
 
-### Create the Model Graph from Scratch
 <a name="createGraph"></a>
+### Create the Model Graph from Scratch
 Another common approach is to create the model graph from scratch instead of restoring the graph from the meta
 file. This is extremely useful when the graph for inference is considerably different from the graph for training.
 The new TensorFlow NMT model (https://github.com/tensorflow/nmt) is one of the cases.
@@ -85,8 +85,8 @@ with tf.Session() as sess:
 A concrete example can be found in the constructor (\_\_init\_\_ method) 
 [here](https://github.com/bshao001/ChatLearner/blob/master/chatbot/botpredictor.py).
 
-### Restore Multiple Models
 <a name="restoreMultiple"></a>
+### Restore Multiple Models
 Sometimes, you may need to load multiple trained models into a single TF session to work together for a task. For 
 example, in a face recognition application, you may need a model to detect faces from a given images, then use 
 another model to recognize these faces. In a typical photo OCR application, you normally require three models to 
@@ -130,8 +130,8 @@ project:
 - Predictor Definition: https://github.com/bshao001/DmsMsgRcg/blob/Sliding_Window_Version/misc/cnnpredictor.py
 - Final Application: https://github.com/bshao001/DmsMsgRcg/blob/Sliding_Window_Version/mesgclsf/msgclassifier.py
  
-### Freeze a Model before Serving it
 <a name="freeezeModel"></a>
+### Freeze a Model before Serving it
 Sometimes, a trained model (file) can be very big, and ranging from half to several GB is a common case. At inference 
 time, you don't have to deal with the big file if you choose to freeze the model. This process can normally decrease 
 the model file to 20% to 30% of its original size, making the inference considerably faster.
@@ -183,14 +183,14 @@ sess.close()
 A concrete working example, including how to use the freezed model for prediction can be found 
 [here](https://github.com/bshao001/DmsMsgRcg/blob/master/misc/freezemodel.py).
 
-### Convert a Keras model to a TensorFlow model
 <a name="convertKeras"></a>
+### Convert a Keras model to a TensorFlow model
 
-### Deploy Multiple Freezed Models
 <a name="multiFreezed"></a>
+### Deploy Multiple Freezed Models
 
-### Serve a Model via Web Services
 <a name="webServices"></a>
+### Serve a Model via Web Services
 Although this does not directly relate to the problem of how to serve a trained model in TensorFlow, it is a 
 commonly encountered issue. 
 
