@@ -26,8 +26,8 @@ as collections and operations.
 its data in the data file. 
 3. data file: It is TensorBundle collection, which saves the values of all variables, such as weights.
 
-### Import the Model Graph from Meta File
 <a name="importGraph"></a>
+### Import the Model Graph from Meta File
 One common approach is to restore the model graph from the meta file, and then restore weights and other data 
 from the data file (index file will be used as well). Here is a sample code snippet:
 
