@@ -94,7 +94,7 @@ another model to recognize these faces. In a typical photo OCR application, you 
 work as a pipeline: model one to detect the text areas (blocks) from a given image; model two to segment characters 
 from the text strings detected by the first model; and model three to recognize those characters.
 
-Loading multiple models into a single session can be tricky if you don't do it properly. Here are the steps to follow:
+Loading multiple models into a single session can be tricky if you don't handle it properly. Here are the steps to follow:
 
 1. For each of the models, you need to have a unique model_scope, and define all the variables within that scope when
 building the graph for training:
@@ -184,13 +184,13 @@ for key in sorted(var_to_shape_map):
     print(reader.get_tensor(key))
 ```
 
-A completed working script is included in this repository.
+A complete working script is included in this repository (inspect_checkpoint.py).
 
 <a name="freeezeModel"></a>
 ### Freeze a Model before Serving it
 Sometimes, a trained model (file) can be very big, and ranging from half to several GB is a common case. At inference 
 time, you don't have to deal with the big file if you choose to freeze the model. This process can normally decrease 
-the model file to 20% to 30% of its original size, making the inference considerably faster.
+the model file to 25% to 35% of its original size, making the inference considerably faster.
 
 Here are the 3 steps to achieve this:
 
@@ -218,7 +218,7 @@ output_graph_def = tf.graph_util.convert_variables_to_constants(
 )
 ```
 
-Here, you may need to use the following code to check the output node name:
+Here, you may need to use the following code to check the output node name as you have learned in the above section:
 
 ```
 for op in graph.get_operations():
