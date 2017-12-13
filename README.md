@@ -94,7 +94,8 @@ another model to recognize these faces. In a typical photo OCR application, you 
 work as a pipeline: model one to detect the text areas (blocks) from a given image; model two to segment characters 
 from the text strings detected by the first model; and model three to recognize those characters.
 
-Loading multiple models into a single session can be tricky if you don't handle it properly. Here are the steps to follow:
+Loading multiple models into a single session can be tricky if you don't handle it properly. Here are the steps to 
+follow:
 
 1. For each of the models, you need to have a unique model_scope, and define all the variables within that scope when
 building the graph for training:
@@ -291,11 +292,59 @@ with tf.gfile.GFile(output_file, "wb") as f:
 ``` 
 
 A concrete working example, including how to use the converted model for prediction can be found 
-[here](https://github.com/bshao001/DmsMsgRcg/blob/master/textdect/convertmodel.py).
+[here](https://github.com/bshao001/DmsMsgRcg/blob/master/textdect/convertmodel.py). This example was based on tf.keras
+in TensorFlow 1.4.
 
 <a name="multiFreezed"></a>
 ### Deploy Multiple Freezed Models
+As explained above, there is often a need to deploy multiple models. With the help of the two above sections, you can
+freeze a trained model in TensorFlow, and convert a trained Keras model to a model in TensorFlow. So, now if you can 
+deploy multiple freezed models, you can actually deploy multiple models trained in TensorFlow or Keras (including the
+tf.keras in TF 1.4).
 
+1. Load the freezed or converted model
+
+```python
+import tensorflow as tf
+    
+frozen_model = "/trained/model_ckpt.pb"
+# Change this to use a specific prefix for all variables/tensors in this model. If the model has already a prefix
+# during the training time, let name="" in the tf.import_graph_def() function.
+model_scope = "model_prefix"  
+    
+with tf.gfile.GFile(frozen_model, "rb") as f:
+    graph_def = tf.GraphDef()
+    graph_def.ParseFromString(f.read())
+
+    # This model_scope adds a prefix to all the nodes in the graph
+    tf.import_graph_def(graph_def, input_map=None, return_elements=None, name="{}/".format(model_scope))
+```
+
+You normally need to identify the input and output of each model, and get the tensor. Then use session.run() for the
+prediction.
+
+2. Create the graph and session and pass the parameters to each model
+
+In order to load mutliple models, you need to create the graph and session outside of the process of loading each model.
+Something like this:
+
+```
+with tf.Graph().as_default() as graph:
+    # Invoke model 1 constructor
+    # Invoke model 2 constructor
+    # Invoke model 3 constructor if you need
+    
+with tf.Session(graph=graph) as sess:
+    # Run model 1 prediction
+    # Run model 2 prediction
+    # Run model 3 prediction if you need
+```
+
+A concrete working example can be found in my [DmsMsgRcg](https://github.com/bshao001/DmsMsgRcg) project.
+1. Model constructor and its prediction method for converted models from Keras: https://github.com/bshao001/DmsMsgRcg/blob/master/textdect/convertmodel.py
+2. Model constructor and its prediction method for freezed models in TensorFlow: https://github.com/bshao001/DmsMsgRcg/blob/master/misc/freezemodel.py
+3. Put everything together to load multiple models and run predictions: https://github.com/bshao001/DmsMsgRcg/blob/master/mesgclsf/msgclassifier.py
+                            
 <a name="webServices"></a>
 ### Serve a Model via Web Services
 Although this does not directly relate to the problem of how to serve a trained model in TensorFlow, it is a 
