@@ -355,13 +355,18 @@ to provide services to other different environments, such as a web application o
 different programming languages, such as Java or C#.
 
 Both REST API and SOAP API can meet your needs on this. REST API is relatively light-weighted, but SOAP API is 
-not that complicated either. You can pick any of them based on your personal preferences.   
+not that complicated either. You can pick any of them based on your personal preferences. 
+   
+As there are many online tutorials talking about the technical details of how REST and SOAP work, I only want to 
+provide concrete working examples to illustrate the approaches.
 
 - REST API
+An example based on Flask framework in Python as the server, while Java and Tomcat as the client can be found in
+my [ChatLearner Project](https://github.com/bshao001/ChatLearner/tree/master/webui_alternative).
 
 - SOAP API
-
-### TensorFlow Serving
+An example based on Tornado web server in Python as the server, while Java and Tomcat as the client can also be 
+found in my [ChatLearner Project](https://github.com/bshao001/ChatLearner/tree/master/webui).
 
 # References:
 1. http://cv-tricks.com/how-to/freeze-tensorflow-models/
