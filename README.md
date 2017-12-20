@@ -361,10 +361,12 @@ As there are many online tutorials talking about the technical details of how RE
 provide concrete working examples to illustrate the approaches.
 
 - REST API
+
 An example based on Flask framework in Python as the server, while Java and Tomcat as the client can be found in
 my [ChatLearner Project](https://github.com/bshao001/ChatLearner/tree/master/webui_alternative).
 
 - SOAP API
+
 An example based on Tornado web server in Python as the server, while Java and Tomcat as the client can also be 
 found in my [ChatLearner Project](https://github.com/bshao001/ChatLearner/tree/master/webui).
 
